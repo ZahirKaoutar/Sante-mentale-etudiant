@@ -28,7 +28,6 @@ def illogic_value(df):
 
     # print("Social Media incohérent :", mask1.sum())
     
-
     df.loc[mask1, "Social_Media_Hours"] = np.nan
     # print(df["Social_Media_Hours"].isnull().sum())
 
@@ -81,7 +80,6 @@ def split_data(df):
 
     y = df["Mental_Health_Risk"].map({
         "Low": 0,
-        "low": 0,
         "Medium": 1,
         "High": 2
     })
@@ -157,8 +155,8 @@ def preprocessing():
 
     preprocessor = ColumnTransformer([
         ("num", pipeline_num, numeric_cols),
-        ("binary", pipeline_onehot, binary_cols),
-        ("nominale", nominal_pipeline,nominal_col ),
+        ("binary",nominal_pipeline, binary_cols),
+        ("nominale", pipeline_onehot,nominal_col ),
         ("ordinal", pipeline_ordinal, ordinal_cols)
     ])
 
@@ -168,26 +166,6 @@ def preprocessing():
 
 
 
-# def preprocessign_data(df):
-#     df=illogic_value(df.copy())
-#     X_train, X_test, y_train, y_test = split_data(df)
-#     preprocessor = preprocessing()
-#     X_train_processed = preprocessor.fit_transform(X_train)
-#     X_test_processed = preprocessor.transform(X_test)
-#     print("Missing values Train:",
-#               np.isnan(X_train_processed).sum())
-    
-#     print("Missing values Test:",
-#               np.isnan(X_test_processed).sum())
-    
-    
-#     return (
-#         X_train_processed,
-#         X_test_processed,
-#         y_train,
-#         y_test,
-#         preprocessor
-#     )
 
 
 

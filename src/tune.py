@@ -53,7 +53,7 @@ def search_params(df):
 
     grid_search.fit(X_train, y_train)
 
-    print("Best accurcy macro:", grid_search.best_score_)
+    print("Best accurcy :", grid_search.best_score_)
     print("Best Parameters:", grid_search.best_params_)
 
     best_model = grid_search.best_estimator_
@@ -87,5 +87,11 @@ def evaluate_final_model(df):
     disp.plot(cmap="Blues", values_format="d")
     plt.title("Final Model - Confusion Matrix")
     plt.show()
+
+    # Sauvegarde du meilleur modèle
+    models_dir = Path("models")
+    models_dir.mkdir(parents=True, exist_ok=True)
+    joblib.dump(best_model, models_dir / "model.joblib")
+    print(f"Modèle sauvegardé avec succès dans {models_dir / 'model.joblib'}")
 
     return best_model, y_pred

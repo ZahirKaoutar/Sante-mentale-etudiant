@@ -1,0 +1,33 @@
+services:
+  # 1. Application interactive Streamlit
+  mental-health-app:
+    build: .
+    container_name: student_mental_health_app
+    ports:
+      - "8502:8501"
+    volumes:
+      - .:/app
+    environment:
+      - PORT=8501
+    restart: unless-stopped
+
+  # 2. Apache Airflow (Interface Web + Scheduler)
+  airflow:
+    image: apache/airflow:2.8.1-python3.11
+    container_name: student_mental_health_airflow
+    restart: unless-stopped
+    ports:
+      - "8088:8080"
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - _AIRFLOW_WWW_USER_CREATE=true
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+      - _PIP_ADDITIONAL_REQUIREMENTS=scikit-learn joblib matplotlib seaborn
+      - PYTHONPATH=/opt/airflow
+    volumes:
+      - ./dag:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+      - ./data:/opt/airflow/data
+      - ./models:/opt/airflow/models
+    command: standalone

@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from IPython.display import display
+try:
+    from IPython.display import display
+except ImportError:
+    display = print
 
 from src.preprocessing import (preprocessign_data,preprocessing)
 from sklearn.pipeline import Pipeline
@@ -136,4 +139,5 @@ def affich_matrix(y_test,y_pred):
         
         disp.plot(cmap="Blues", values_format="d")
         plt.show()
+        return disp
 

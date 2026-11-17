@@ -5,7 +5,10 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from IPython.display import display
+try:
+    from IPython.display import display
+except ImportError:
+    display = print
 
 def load_data(df):
 
@@ -48,7 +51,7 @@ def anormal_logic(df):
     display(ilogis_time)
 
     print("\n========== STUDY YEAR FOR STUDENTS  ==========")
-    display(reelle_age_study)
+    display(reelle_age_study.sort_values(  by="Year_of_Study", ascending=False))
 
     print("\n========== AGE / YEAR INCONSISTENCIES ==========")
     display("ilogic_year_study",ilogic_year_study)
